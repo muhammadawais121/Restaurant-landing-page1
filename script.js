@@ -1,3 +1,160 @@
+// ===== LOADER FUNCTIONALITY =====
+window.addEventListener('load', function() {
+    const loader = document.getElementById('loader');
+    const mainContent = document.getElementById('main-content');
+    
+    // Simulate loading time (minimum 2 seconds for effect)
+    setTimeout(() => {
+        loader.classList.add('fade-out');
+        
+        // After loader fades out, show main content
+        setTimeout(() => {
+            loader.style.display = 'none';
+            mainContent.classList.add('loaded');
+        }, 500);
+    }, 2000);
+});
+
+// ===== CHATBOT FUNCTIONALITY =====
+class Chatbot {
+    constructor() {
+        this.isOpen = false;
+        this.responses = {
+            'hours': 'We are open Monday to Sunday from 11:00 AM to 10:00 PM. 🕐',
+            'menu': 'Our menu features authentic Oriental cuisine including Spicy Noodles ($12.99), Special Fried Rice ($10.99), and Steamed Dumplings ($8.99). You can view all dishes in our Best Sellers section! 🍜',
+            'reservations': 'You can make a reservation by calling us 0325-1831212 or visiting our Contact section. We recommend booking in advance for weekends! 📞',
+            'location': 'We are located at shamsabad station rawalpindi . 📍',
+            'delivery': 'Yes, we offer delivery! You can place orders through our website or call us directly. Delivery usually takes 30-45 minutes. 🚚',
+            'specials': 'Check out our Promo section for current specials! We have weekend discounts, family combos, and first-time customer offers. 🎉',
+            'default': 'I\'m here to help! You can ask me about our menu, hours, reservations, location, delivery, or current specials. What would you like to know? 😊'
+        };
+        
+        this.initializeEventListeners();
+    }
+    
+    initializeEventListeners() {
+        const chatbotBtn = document.getElementById('chatbot-btn');
+        const chatbotWindow = document.getElementById('chatbot-window');
+        const minimizeBtn = document.getElementById('minimize-chat');
+        const sendBtn = document.getElementById('send-btn');
+        const chatInput = document.getElementById('chat-input');
+        const quickBtns = document.querySelectorAll('.quick-btn');
+        
+        // Toggle chatbot
+        chatbotBtn.addEventListener('click', () => this.toggleChat());
+        minimizeBtn.addEventListener('click', () => this.toggleChat());
+        
+        // Send message
+        sendBtn.addEventListener('click', () => this.sendMessage());
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.sendMessage();
+            }
+        });
+        
+        // Quick questions
+        quickBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const question = btn.getAttribute('data-question');
+                this.sendUserMessage(question);
+                this.generateBotResponse(question);
+            });
+        });
+    }
+    
+    toggleChat() {
+        const chatbotBtn = document.getElementById('chatbot-btn');
+        const chatbotWindow = document.getElementById('chatbot-window');
+        
+        this.isOpen = !this.isOpen;
+        
+        if (this.isOpen) {
+            chatbotBtn.classList.add('active');
+            chatbotWindow.classList.add('active');
+        } else {
+            chatbotBtn.classList.remove('active');
+            chatbotWindow.classList.remove('active');
+        }
+    }
+    
+    sendMessage() {
+        const chatInput = document.getElementById('chat-input');
+        const message = chatInput.value.trim();
+        
+        if (message) {
+            this.sendUserMessage(message);
+            this.generateBotResponse(message);
+            chatInput.value = '';
+        }
+    }
+    
+    sendUserMessage(message) {
+        const messagesContainer = document.getElementById('chatbot-messages');
+        const messageElement = document.createElement('div');
+        messageElement.className = 'message user-message';
+        messageElement.innerHTML = `
+            <div class="message-avatar">👤</div>
+            <div class="message-content">
+                <p>${message}</p>
+            </div>
+        `;
+        
+        messagesContainer.appendChild(messageElement);
+        this.scrollToBottom();
+    }
+    
+    generateBotResponse(userMessage) {
+        // Simulate typing delay
+        setTimeout(() => {
+            const response = this.getBotResponse(userMessage.toLowerCase());
+            this.sendBotMessage(response);
+        }, 1000);
+    }
+    
+    getBotResponse(message) {
+        // Check for keywords in the message
+        if (message.includes('hour') || message.includes('time') || message.includes('open')) {
+            return this.responses.hours;
+        } else if (message.includes('menu') || message.includes('food') || message.includes('dish')) {
+            return this.responses.menu;
+        } else if (message.includes('reservation') || message.includes('book') || message.includes('table')) {
+            return this.responses.reservations;
+        } else if (message.includes('location') || message.includes('address') || message.includes('where')) {
+            return this.responses.location;
+        } else if (message.includes('delivery') || message.includes('order')) {
+            return this.responses.delivery;
+        } else if (message.includes('special') || message.includes('promo') || message.includes('discount')) {
+            return this.responses.specials;
+        } else {
+            return this.responses.default;
+        }
+    }
+    
+    sendBotMessage(message) {
+        const messagesContainer = document.getElementById('chatbot-messages');
+        const messageElement = document.createElement('div');
+        messageElement.className = 'message bot-message';
+        messageElement.innerHTML = `
+            <div class="message-avatar">🤖</div>
+            <div class="message-content">
+                <p>${message}</p>
+            </div>
+        `;
+        
+        messagesContainer.appendChild(messageElement);
+        this.scrollToBottom();
+    }
+    
+    scrollToBottom() {
+        const messagesContainer = document.getElementById('chatbot-messages');
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+}
+
+// Initialize chatbot
+const chatbot = new Chatbot();
+
+// ===== EXISTING FUNCTIONALITY =====
 // Dish data
 const dishData = {
     'spicy-noodles': {
