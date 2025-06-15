@@ -8,6 +8,36 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+     <!-- Loader Screen -->
+    <div id="loader" class="loader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <div class="chef-hat">
+                    <div class="hat-top"></div>
+                    <div class="hat-band"></div>
+                </div>
+                <h2>Delicious</h2>
+            </div>
+            <div class="loader-animation">
+                <div class="food-icons">
+                    <div class="food-icon">🍜</div>
+                    <div class="food-icon">🍚</div>
+                    <div class="food-icon">🥟</div>
+                </div>
+            </div>
+            <div class="loading-text">
+                <span>Loading delicious experience...</span>
+                <div class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- Main Website Content -->
+    <div id="main-content" class="main-content">
+
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -72,7 +102,7 @@
                     </div>
                 </div>
                 <div class="dish-card" data-dish="dumplings">
-                    <img src="/./dumplings.webp" alt="Dumplings">
+                    <img src="dumplings.webp" alt="Dumplings">
                     <div class="dish-info">
                         <h3>Steamed Dumplings</h3>
                         <p class="dish-description">Handmade dumplings filled with fresh meat and vegetables.</p>
@@ -250,6 +280,60 @@
             </div>
         </div>
     </footer>
+     <!-- Chatbot -->
+    <div class="chatbot-container">
+        <!-- Chatbot Button -->
+        <button id="chatbot-btn" class="chatbot-btn">
+            <span class="chat-icon">💬</span>
+            <span class="close-icon">✕</span>
+        </button>
+
+        <!-- Chatbot Window -->
+        <div id="chatbot-window" class="chatbot-window">
+            <div class="chatbot-header">
+                <div class="bot-info">
+                    <div class="bot-avatar">🤖</div>
+                    <div class="bot-details">
+                        <h4>Delicious Assistant</h4>
+                        <span class="bot-status">Online</span>
+                    </div>
+                </div>
+                <button id="minimize-chat" class="minimize-btn">−</button>
+            </div>
+            
+            <div class="chatbot-messages" id="chatbot-messages">
+                <div class="message bot-message">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <p>Hello! Welcome to Delicious Restaurant! 👋</p>
+                        <p>I'm here to help you with:</p>
+                        <ul>
+                            <li>Menu information</li>
+                            <li>Order assistance</li>
+                            <li>Restaurant hours</li>
+                            <li>Reservations</li>
+                        </ul>
+                        <p>How can I assist you today?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chatbot-input">
+                <div class="quick-questions">
+                    <button class="quick-btn" data-question="What are your hours?">Hours</button>
+                    <button class="quick-btn" data-question="Show me the menu">Menu</button>
+                    <button class="quick-btn" data-question="How can I make a reservation?">Reservations</button>
+                </div>
+                <div class="input-area">
+                    <input type="text" id="chat-input" placeholder="Type your message...">
+                    <button id="send-btn" class="send-btn">
+                        <span>➤</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Dish Details Modal -->
     <div id="dishModal" class="modal">
